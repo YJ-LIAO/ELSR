@@ -11,7 +11,9 @@
 #include "Parameters.h"
 #include <boost/filesystem.hpp>
 #include "stlplus3/file_system.hpp"
-#include "eigen3/Eigen"
+#include <Eigen/Dense>
+#include <Eigen/Core>
+#include <Eigen/Geometry>
 
 
 #include "opencv2/imgproc.hpp"
@@ -274,6 +276,7 @@ void dect_lsd_lines(cv::Mat& img, cv::Mat& lines_Mf_, float scale, float cams_fo
 	int line_num;
 	float* img_ptr = (float*)img_double.data;
 	float* line_lsd_ptr = lsd_scale(&line_num, img_ptr, img_double.cols, img_double.rows, 1.0) - 1;
+	// std::cout << "line_num: " << line_num << std::endl;
 	// note -1 is minored for iteration
 
 	// add the lines to opencv Mat
@@ -411,8 +414,8 @@ void dect_pole_lines(cv::Mat& img, std::string folder_path, std::string image_na
 			cv::Mat cvK = cv::Mat_<double>::zeros(3,3);
 			cvK.at<double>(0,0) = cams_focal;
 			cvK.at<double>(1,1) = cams_focal;
-			cvK.at<double>(0,2) = K(0,2); // 需要改！！！
-			cvK.at<double>(1,2) = K(1,2);
+			cvK.at<double>(0,2) = img.cols; // 需要改！！！
+			cvK.at<double>(1,2) = img.rows;
 			cvK.at<double>(2,2) = 1.0;
 
 			cv::Mat cvDistCoeffs(5,1,CV_64FC1,cv::Scalar(0));
@@ -454,10 +457,10 @@ void dect_pole_lines(cv::Mat& img, std::string folder_path, std::string image_na
 	lines_Mf.copyTo(lines_Mf_);
 }
 
-void processImage(cv::Mat& CM_Mf, const std::vector<cv::Mat>& camera_Rts, const std::vector<float>& cams_focals,
-	cv::Mat& space_points_Mf, cv::Mat& imsizes_Mf_, int i, 
-	std::vector<std::string>& image_names, std::string input_folder,
-	const Eigen::Vector3d& radial, const Eigen::Vector2d& tangential,
+void processImage(cv::Mat CM_Mf, const std::vector<cv::Mat> camera_Rts, const std::vector<float> cams_focals,
+	cv::Mat space_points_Mf, cv::Mat imsizes_Mf_, int i, 
+	std::vector<std::string> image_names, std::string input_folder,
+	Eigen::Vector3d radial, Eigen::Vector2d tangential,
 	float costhre, float dist, int inter_support_num, int maxwidth)
 {
 
@@ -510,7 +513,8 @@ void processImage(cv::Mat& CM_Mf, const std::vector<cv::Mat>& camera_Rts, const 
 	// minum line length for intersection line
 	//2 detect lines
 	cv::Mat lines_Mf;
-	dect_lsd_lines(imgResized, lines_Mf, scale, cams_focals[i]);
+	// std::cout << i << std::endl;
+	dect_lsd_lines(imgResized, lines_Mf, scale, cams_focals[i], radial, tangential);
 	// dect_pole_lines(img, FolderString, image_name, lines_Mf, cams_focals[i], radial, tangential, scale);
 
 

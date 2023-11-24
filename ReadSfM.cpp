@@ -1,5 +1,7 @@
 #include"read_VisualSfM.h"
-#include "Eigen/Eigen"
+#include <Eigen/Dense>
+#include <Eigen/Core>
+#include <Eigen/Geometry>
 
 
 void analysis_match(cv::Mat mscores, cv::Mat& imidx_Mf, int knn, int minconnect)
@@ -71,7 +73,7 @@ int read_VisualSfM(std::string inputFolder, std::string nvmFile,
 	std::vector<cv::Mat>& cams_RT,
 	cv::Mat& points_space3D,
 	cv::Mat& imidx_Mf_,
-	cv::Mat& cameras_Mf_,
+	// cv::Mat& cameras_Mf_,
 	Eigen::Vector3d& radial,
 	Eigen::Vector2d& tangential,
 	int knn_image)
@@ -241,14 +243,14 @@ int read_VisualSfM(std::string inputFolder, std::string nvmFile,
 
 		cam_IDs.clear();
 	}
-	
+
 
 	std::string ParamFile = "/home/l/data/Line_Data/4baf8728f2424904/4baf8728f2424904_pose/param_mvg.txt";
 	// check if poses file exists
 	boost::filesystem::path param(ParamFile);
 	if (!boost::filesystem::exists(param))
 	{
-		LOG_S(ERROR) << "Param file " << ParamFile << " does not exist!" << std::endl;
+		std::cout << "Param file " << ParamFile << " does not exist!" << std::endl;
 		return -1;
 	}
 
@@ -280,9 +282,9 @@ int read_VisualSfM(std::string inputFolder, std::string nvmFile,
     radial << std::stod(r0), std::stod(r1), std::stod(r2);
     tangential << std::stod(t0), std::stod(t1);
 
-    LOG_S(INFO) << "K: " << K;
-    LOG_S(INFO) << "radial: " << radial;
-    LOG_S(INFO) << "tangential: " << tangential;
+   	// std::cout << "K: " << K << std::endl;
+   	// std::cout << "radial: " << radial << std::endl;
+    // std::cout << "tangential: " << tangential << std::endl;
 
 #else
 
@@ -293,7 +295,7 @@ int read_VisualSfM(std::string inputFolder, std::string nvmFile,
 	boost::filesystem::path poses(PosesFile);
 	if (!boost::filesystem::exists(poses))
 	{
-		LOG_S(ERROR) << "Poses file " << PosesFile << " does not exist!" << std::endl;
+		std::cout << "Poses file " << PosesFile << " does not exist!" << std::endl;
 		return -1;
 	}
 
@@ -307,7 +309,7 @@ int read_VisualSfM(std::string inputFolder, std::string nvmFile,
 	}
 	if (num_cams == 0)
 	{
-		LOG_S(ERROR) << "No aligned cameras in Poses file!" << std::endl;
+		std::cout << "No aligned cameras in Poses file!" << std::endl;
 		return -1;
 	}
 
@@ -331,10 +333,10 @@ int read_VisualSfM(std::string inputFolder, std::string nvmFile,
     {
         if(poses_line.empty())
         {
-            LOG_S(ERROR) << "poses_line.empty()" << std::endl;
+            std::cout << "poses_line.empty()" << std::endl;
             continue;
         }
-        LOG_S(INFO) << "poses_line: " << poses_line;
+        std::cout << "poses_line: " << poses_line;
         std::stringstream poses_line_stream(poses_line);
 
         std::string image_name;
@@ -353,8 +355,8 @@ int read_VisualSfM(std::string inputFolder, std::string nvmFile,
         Eigen::Vector3d translation;
         translation << std::stod(translation_00), std::stod(translation_01), std::stod(translation_02);
 
-        LOG_S(INFO) << "rotation: " << rotation;
-        LOG_S(INFO) << "translation: " << translation;
+        std::cout << "rotation: " << rotation;
+        std::cout << "translation: " << translation;
         
 		image_names[viewid] = image_name;
 
@@ -396,9 +398,9 @@ int read_VisualSfM(std::string inputFolder, std::string nvmFile,
     radial << std::stod(r0), std::stod(r1), std::stod(r2);
     tangential << std::stod(t0), std::stod(t1);
 
-    LOG_S(INFO) << "K: " << K;
-    LOG_S(INFO) << "radial: " << radial;
-    LOG_S(INFO) << "tangential: " << tangential;
+    std::cout << "K: " << K;
+    std::cout << "radial: " << radial;
+    std::cout << "tangential: " << tangential;
 
 #endif
 

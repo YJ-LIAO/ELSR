@@ -58,6 +58,7 @@
         "bitset": "cpp",
         "cinttypes": "cpp",
         "core": "cpp",
-        "eigen": "cpp"
+        "eigen": "cpp",
+        "dense": "cpp"
     }
 }

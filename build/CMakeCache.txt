@@ -310,14 +310,14 @@ CUDA_npps_LIBRARY:FILEPATH=/usr/local/cuda/lib64/libnpps.so
 //Path to a library.
 CUDA_rt_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/librt.so
 
-//include (root) directory of the Eigen lib
-EIGEN3_ROOT_DIR:PATH=
-
 //Value Computed by CMake
 ELSR_BINARY_DIR:STATIC=/ELSR/build
 
 //Value Computed by CMake
 ELSR_SOURCE_DIR:STATIC=/ELSR
+
+//The directory containing a CMake configuration file for Eigen3.
+Eigen3_DIR:PATH=/usr/lib/cmake/eigen3
 
 //The directory containing a CMake configuration file for OpenCV.
 OpenCV_DIR:PATH=/usr/local/lib/cmake/opencv4

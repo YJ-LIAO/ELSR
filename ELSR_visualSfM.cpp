@@ -14,9 +14,10 @@
 #include "ThreadPool.h"
 #include"read_VisualSfM.h"
 #include"IO.h"
-#include "Eigen/Eigen"
+#include <Eigen/Dense>
+#include <Eigen/Core>
+#include <Eigen/Geometry>
 
-#define Read_VisualSFM 1
 
 
 
@@ -46,7 +47,7 @@ int main()
 		cams_RT,
 		points_space3D,
 		imidx_Mf,
-		cameras_Mf,
+		// cameras_Mf,
 		radial,
 		tangential,
 		knn_image);
