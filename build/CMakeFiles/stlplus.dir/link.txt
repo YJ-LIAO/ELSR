@@ -1,0 +1,2 @@
+/usr/bin/ar qc libstlplus.a  CMakeFiles/stlplus.dir/stlplus3/file_system.cpp.o CMakeFiles/stlplus.dir/stlplus3/portability_fixes.cpp.o CMakeFiles/stlplus.dir/stlplus3/wildcard.cpp.o
+/usr/bin/ranlib libstlplus.a

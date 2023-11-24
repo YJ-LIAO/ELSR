@@ -1,0 +1,4 @@
+/ELSR/build/CMakeFiles/edit_cache.dir
+/ELSR/build/CMakeFiles/rebuild_cache.dir
+/ELSR/build/CMakeFiles/ELSR.dir
+/ELSR/build/CMakeFiles/stlplus.dir
